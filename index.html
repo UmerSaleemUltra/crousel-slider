@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Slider</title>
+    <style>
+        /* Styles for the carousel container */
+        .carousel-container {
+            width: 80%;
+            margin: 50px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Styles for the carousel wrapper */
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Styles for each carousel item */
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 100%;
+            margin-right: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Styles for carousel navigation buttons */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .carousel-nav button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .carousel-nav button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hide left button when at first slide */
+        .carousel-container[data-current-slide="1"] .prev-btn {
+            display: none;
+        }
+
+        /* Hide right button when at last slide */
+        .carousel-container[data-current-slide="3"] .next-btn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container" data-current-slide="1">
+        <div class="carousel-wrapper">
+            <div class="carousel-item">
+                <img src="https://cdn.britannica.com/53/157453-050-2D17B555/Ice-cubes-heat-temperature-rises-melting-ice.jpg" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefuUjmyr4g524UKqfiJ9GG_nFSv7uFPOyovFs3kVrSw&s" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4emuuCdv-PXnHtBbrtyb0ea9xA_cPysT5UHfCG-9zIQ&s" alt="Slide 3">
+            </div>
+        </div>
+        <div class="carousel-nav">
+            <button class="prev-btn" onclick="prevSlide()">Prev</button>
+            <button class="next-btn" onclick="nextSlide()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+
+        function nextSlide() {
+            const carouselContainer = document.querySelector('.carousel-container');
+            const carouselWrapper = document.querySelector('.carousel-wrapper');
+            const totalSlides = document.querySelectorAll('.carousel-item').length;
+            const slideWidth = document.querySelector('.carousel-item').offsetWidth;
+
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                carouselWrapper.style.transform = `translateX(-${slideWidth * (currentSlide - 1)}px)`;
+                carouselContainer.dataset.currentSlide = currentSlide;
+            }
+        }
+
+        function prevSlide() {
+            const carouselContainer = document.querySelector('.carousel-container');
+            const carouselWrapper = document.querySelector('.carousel-wrapper');
+            const slideWidth = document.querySelector('.carousel-item').offsetWidth;
+
+            if (currentSlide > 1) {
+                currentSlide--;
+                carouselWrapper.style.transform = `translateX(-${slideWidth * (currentSlide - 1)}px)`;
+                carouselContainer.dataset.currentSlide = currentSlide;
+            }
+        }
+    </script>
+</body>
+</html>
